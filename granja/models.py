@@ -1,7 +1,6 @@
 ''' imports '''
 from datetime import timezone
 from django.db import models
-from django.dispatch import receiver
 
 class Ovo(models.Model):
     STATUS_CHOICES = (
@@ -10,7 +9,8 @@ class Ovo(models.Model):
     )
     data_cadastro = models.DateTimeField(auto_now_add=True, editable=True)
     codigo = models.CharField(max_length=10, unique=True, editable=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="armazenado", editable=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES,
+                               default="armazenado", editable=True)
     chocadeira = models.CharField(max_length=3, default=1)
     data_chocadeira = models.DateField(null=True, blank=True)
     dias_chocadeira = models.IntegerField(blank=True, null=True)
@@ -68,16 +68,27 @@ class Ovo(models.Model):
         super(Ovo, self).save(*args, **kwargs)
 
 class Raca(models.Model):
-    
+    nome = models.CharField(max_length=20)
+    nome_cientifico = models.CharField(max_length=20, blank=True, null=True)
+    objects = models.Manager()
+
+    def __str__(self):
+        return f" {self.nome} "
+
+    def save(self, *args, **kwargs):
+        super(Raca, self).save(*args, **kwargs)
 
 class Pintinho(models.Model):
     ovo = models.OneToOneField(Ovo, on_delete=models.CASCADE)
     codigo = models.CharField(max_length=10, unique=True)
-    raca = models.CharField(max_length=10, blank=True, null=True)
-    nome_cientifico = models.CharField(max_length=50, blank=True, null=True)
+    raca = models.ForeignKey(Raca, on_delete=models.CASCADE, choices=Raca.objects.all())
     deficiencia = models.BooleanField(default=False)
     data_eclosao = models.DateTimeField(default=timezone.now(), blank=True, null=True)
+    codigo_ovo = Ovo.codigo
+    def __str__(self):
+        return f"{ self.codigo }"
 
     def save(self, *args, **kwargs):
-        self.codigo = "p-" + self.ovo.codigo
+        if not self.codigo.startswith("p-"):
+            self.codigo = "p-" + self.codigo_ovo
         super(Pintinho, self).save(*args, **kwargs)
