@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import index
 
-from hello_world.core import views as core_views
 
 urlpatterns = [
-    path("", core_views.index),
+    path("", index, name='index'),
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
