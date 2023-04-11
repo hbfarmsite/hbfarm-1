@@ -81,9 +81,9 @@ class Raca(models.Model):
 class Pintinho(models.Model):
     ovo = models.OneToOneField(Ovo, on_delete=models.CASCADE)
     codigo = models.CharField(max_length=10, unique=True)
-    raca = models.ForeignKey(Raca, on_delete=models.CASCADE, choices=Raca.objects.all())
+    raca = models.ForeignKey(Raca, on_delete=models.CASCADE)
     deficiencia = models.BooleanField(default=False)
-    data_eclosao = models.DateTimeField(default=timezone.now(), blank=True, null=True)
+    data_eclosao = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     codigo_ovo = Ovo.codigo
     def __str__(self):
         return f"{ self.codigo }"
