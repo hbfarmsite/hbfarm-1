@@ -1,5 +1,5 @@
 ''' imports '''
-from datetime import timezone
+from datetime import timezone, datetime
 from django.db import models
 
 class Ovo(models.Model):
@@ -8,7 +8,7 @@ class Ovo(models.Model):
         ("chocando", "Chocando"),
     )
     data_cadastro = models.DateTimeField(auto_now_add=True, editable=True)
-    codigo = models.CharField(max_length=10, unique=True, editable=True)
+    codigo = models.CharField(max_length=10, unique=True, editable=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES,
                                default="armazenado", editable=True)
     chocadeira = models.CharField(max_length=3, default=1)
@@ -57,13 +57,13 @@ class Ovo(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.codigo:
-            data_atual = timezone.now()
+            data_atual = datetime.now()
             ano = int(data_atual.strftime('%y'))
             mes = int(data_atual.strftime('%m'))
             dia = int(data_atual.strftime('%d'))
             ultimo_id_dia = Ovo.objects.filter(
                 data_cadastro__date=data_atual).count()
-            codigo = f'{ano}{mes}{dia}{ultimo_id_dia+1:01d}'
+            codigo = f'{ano}-{mes}-{dia}-{ultimo_id_dia+1:01d}'
             self.codigo = codigo
         super(Ovo, self).save(*args, **kwargs)
 
@@ -85,6 +85,7 @@ class Pintinho(models.Model):
     deficiencia = models.BooleanField(default=False)
     data_eclosao = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     codigo_ovo = Ovo.codigo
+
     def __str__(self):
         return f"{ self.codigo }"
 

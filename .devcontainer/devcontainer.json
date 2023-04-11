@@ -17,8 +17,12 @@
     },
     "vscode": {
       "extensions": [
-        "ms-python.python"
-      ]
+		"ms-python.python",
+		"GitHub.copilot",
+		"Emeric-Defay.django-factory",
+		"batisteo.vscode-django",
+		"formulahendry.code-runner"
+	]
     }
   },
   "portsAttributes": {

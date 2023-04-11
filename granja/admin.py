@@ -12,7 +12,7 @@ class OvoAdmin(admin.ModelAdmin):
 
 
 class PintinhoAdmin(admin.ModelAdmin):
-    list_display = ('ovo', 'codigo', 'raca', 'deficiencia', 'data_eclosao')
+    list_display = ('codigo','ovo', 'raca', 'deficiencia', 'data_eclosao')
     list_filter = ('raca', 'deficiencia', 'data_eclosao')
     search_fields = ['raca', 'data_eclosao']
     ordering = ['data_eclosao']
