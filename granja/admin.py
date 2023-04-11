@@ -3,7 +3,7 @@ from granja.models import Ovo,  Pintinho, Raca
 
 
 class OvoAdmin(admin.ModelAdmin):
-    list_display = ('codigo', 'status', 'chocadeira',
+    list_display = ('codigo','status', 'chocadeira',
                     'data_chocadeira', 'dias_chocadeira')
     list_filter = ('status', 'chocadeira', 'data_cadastro')
     search_fields = ['codigo']
