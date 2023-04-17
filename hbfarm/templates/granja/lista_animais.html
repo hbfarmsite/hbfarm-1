@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+<div>
+ <h1> Animais na Granja </h1>
+ <ul>
+ {% for animal in animais %}
+    <li> {{ animal.nome}} - {{ animal.especie}} - {{animal.idade}} anos</li>
+{% endfor %}
+</ul>
+</div>

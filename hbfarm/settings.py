@@ -85,12 +85,15 @@ WSGI_APPLICATION = "hbfarm.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hbdados',
+        'USER': 'hbdados',
+        'PASSWORD': 'Apple94Br#1921',
+        'HOST': '179.188.16.35',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

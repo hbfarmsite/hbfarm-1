@@ -1,6 +1,23 @@
 {
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.colorTheme": "Visual Studio Dark",
-    "python.linting.pylintArgs": ["--disable=C0111"]
-    
+    "python.linting.pylintArgs": [
+        "--disable=C0111"
+    ],
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./hbfarm",
+        "-p",
+        "*test.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
 }
