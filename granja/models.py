@@ -1,16 +1,17 @@
-''' imports '''
 from datetime import timezone, datetime
 from django.db import models
+
 
 class Ovo(models.Model):
     STATUS_CHOICES = (
         ("armazenado", "Armazenado"),
         ("chocando", "Chocando"),
+        ("pintinho", "Pintinho"),
     )
     data_cadastro = models.DateTimeField(auto_now_add=True, editable=True)
     codigo = models.CharField(max_length=10, unique=True, editable=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES,
-                               default="armazenado", editable=True)
+                              default="armazenado", editable=True)
     chocadeira = models.CharField(max_length=3, default=1)
     data_chocadeira = models.DateField(null=True, blank=True)
     dias_chocadeira = models.IntegerField(blank=True, null=True)
@@ -53,7 +54,7 @@ class Ovo(models.Model):
         elif self.dias_chocadeira > 1 and self.dias_chocadeira <= 21:
             return f"ovoscopia/{self.dias_chocadeira}dia.png"
         else:
-            return "pintinho.png"
+            return "ovoscopia/pintinho.png"
 
     def save(self, *args, **kwargs):
         if not self.codigo:
@@ -67,10 +68,10 @@ class Ovo(models.Model):
             self.codigo = codigo
         super(Ovo, self).save(*args, **kwargs)
 
+
 class Raca(models.Model):
     nome = models.CharField(max_length=20)
     nome_cientifico = models.CharField(max_length=20, blank=True, null=True)
-    objects = models.Manager()
 
     def __str__(self):
         return f" {self.nome} "
@@ -78,12 +79,14 @@ class Raca(models.Model):
     def save(self, *args, **kwargs):
         super(Raca, self).save(*args, **kwargs)
 
+
 class Pintinho(models.Model):
     ovo = models.OneToOneField(Ovo, on_delete=models.CASCADE)
     codigo = models.CharField(max_length=10, unique=True)
     raca = models.ForeignKey(Raca, on_delete=models.CASCADE)
     deficiencia = models.BooleanField(default=False)
-    data_eclosao = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    data_eclosao = models.DateTimeField(
+        auto_now_add=True, blank=True, null=True)
     codigo_ovo = Ovo.codigo
 
     def __str__(self):
